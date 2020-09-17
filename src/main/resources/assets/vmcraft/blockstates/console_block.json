@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"": {
+			"model": "vmcraft:block/console_block"
+		}
+	}
+}
