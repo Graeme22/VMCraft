@@ -1,5 +1,7 @@
 package com.github.graeme22.vmcraft.blocks;
 
+import java.io.IOException;
+
 import com.github.graeme22.vmcraft.VMCraft;
 
 import net.minecraft.block.Block;
@@ -26,14 +28,15 @@ public class ConsoleBlock extends Block {
     
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-    	if(!worldIn.isBlockPowered(pos))
-    		return ActionResultType.FAIL;
-    	else {
-    		// launch GUI/CLI
-    		VMCraft.LOGGER.info("Booting up!");
-    		
-    		return ActionResultType.SUCCESS;
-    	}
+		// launch GUI/CLI
+		try {
+			Process process = Runtime.getRuntime().exec("virt-viewer -cf qemu:///system fedora");
+		} catch (IOException e) {
+			VMCraft.LOGGER.error("Failed to launch machine.");
+			e.printStackTrace();
+		}
+		
+		return ActionResultType.SUCCESS;
     }
     
 }

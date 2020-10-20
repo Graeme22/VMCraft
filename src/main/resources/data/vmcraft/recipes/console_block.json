@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "xyx",
+    "wzw",
+    "xvx"
+  ],
+  "key":
+  {
+    "x":
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    "y":
+    {
+      "item": "minecraft:glass_pane"
+    },
+    "w":
+    {
+      "item": "minecraft:redstone"
+    },
+    "z":
+    {
+      "item": "minecraft:comparator"
+    },
+    "v":
+    {
+      "item": "minecraft:redstone_torch"
+    }
+  },
+  "result":
+  {
+    "item": "vmcraft:console_block",
+    "count": 1
+  }
+}
