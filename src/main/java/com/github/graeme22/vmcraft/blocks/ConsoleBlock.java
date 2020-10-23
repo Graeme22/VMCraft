@@ -21,9 +21,7 @@ public class ConsoleBlock extends Block {
     public ConsoleBlock() {
         super(Block.Properties.create(Material.IRON)
         					  .hardnessAndResistance(5.0f, 6.0f)
-        		   			  .sound(SoundType.METAL)
-                   			  .harvestLevel(2)
-                   			  .harvestTool(ToolType.PICKAXE));
+        		   			  .sound(SoundType.METAL));
     }
     
     @Override

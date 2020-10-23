@@ -1,6 +1,72 @@
 {
-	"parent": "block/cube_all",
-	"textures": {
-		"all": "vmcraft:block/console_block"
-	}
+    "__comment": "Model generated using MrCrayfish's Model Creator (https://mrcrayfish.com/tools?id=mc)",
+    "ambientocclusion": false,
+    "textures": {
+        "keyboard": "vmcraft:block/keyboard",
+        "side": "vmcraft:block/side",
+        "top": "vmcraft:block/top",
+        "screen": "vmcraft:block/screen",
+        "front": "vmcraft:block/front"
+    },
+    "display": {
+        "gui": {
+            "rotation": [ 30, 45, 0 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 0.625, 0.625, 0.625 ]
+        },
+        "ground": {
+            "rotation": [ 0, 0, 0 ],
+            "translation": [ 0, 3, 0 ],
+            "scale": [ 0.25, 0.25, 0.25 ]
+        },
+        "fixed": {
+            "rotation": [ 0, 180, 0 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 1, 1, 1 ]
+        },
+        "head": {
+            "rotation": [ 0, 180, 0 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 1, 1, 1 ]
+        },
+        "firstperson_righthand": {
+            "rotation": [ 0, 315, 0 ],
+            "translation": [ 0, 2.5, 0 ],
+            "scale": [ 0.4, 0.4, 0.4 ]
+        },
+        "thirdperson_righthand": {
+            "rotation": [ 75, 315, 0 ],
+            "translation": [ 0, 2.5, 0 ],
+            "scale": [ 0.375, 0.375, 0.375 ]
+        }
+    },
+    "elements": [
+        {
+            "name": "base",
+            "from": [ 1, 0, 5 ], 
+            "to": [ 15, 1, 15 ],
+            "faces": {
+                "north": { "texture": "#front", "uv": [ 0, 0, 14, 1 ] },
+                "east": { "texture": "#front", "uv": [ 0, 0, 10, 1 ] },
+                "south": { "texture": "#front", "uv": [ 0, 0, 14, 1 ] },
+                "west": { "texture": "#front", "uv": [ 0, 0, 10, 1 ] },
+                "up": { "texture": "#keyboard", "uv": [ 0, 0, 14, 10 ] },
+                "down": { "texture": "#top", "uv": [ 0, 0, 14, 10 ], "cullface": "down" }
+            }
+        },
+        {
+            "name": "screen",
+            "from": [ 1, 0, 5 ], 
+            "to": [ 15, 10, 6 ], 
+            "rotation": { "origin": [ 8, 0, 5 ], "axis": "x", "angle": -22.5 },
+            "faces": {
+                "north": { "texture": "#top", "uv": [ 0, 0, 14, 10 ] },
+                "east": { "texture": "#side", "uv": [ 0, 0, 1, 10 ] },
+                "south": { "texture": "#screen", "uv": [ 0, 0, 13, 10 ] },
+                "west": { "texture": "#side", "uv": [ 0, 0, 1, 10 ] },
+                "up": { "texture": "#front", "uv": [ 0, 0, 14, 1 ] },
+                "down": { "texture": "#front", "uv": [ 0, 0, 14, 1 ] }
+            }
+        }
+    ]
 }
