@@ -1,8 +1,8 @@
 {
-	"variants": {
-		"facing=north": {"model": "vmcraft:block/console_block"},
-		"facing=south": {"model": "vmcraft:block/console_block", "y": 180},
-		"facing=west": {"model": "vmcraft:block/console_block", "y": 270},
-		"facing=east": {"model": "vmcraft:block/console_block", "y": 90}
-	}
+    "variants": {
+        "facing=north": {"model": "vmcraft:block/console_block"},
+        "facing=south": {"model": "vmcraft:block/console_block", "y": 180},
+        "facing=west": {"model": "vmcraft:block/console_block", "y": 270},
+        "facing=east": {"model": "vmcraft:block/console_block", "y": 90}
+    }
 }

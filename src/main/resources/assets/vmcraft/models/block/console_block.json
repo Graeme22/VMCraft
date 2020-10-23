@@ -1,12 +1,12 @@
 {
-    "__comment": "Model generated using MrCrayfish's Model Creator (https://mrcrayfish.com/tools?id=mc)",
     "ambientocclusion": false,
     "textures": {
         "keyboard": "vmcraft:block/keyboard",
         "side": "vmcraft:block/side",
         "top": "vmcraft:block/top",
         "screen": "vmcraft:block/screen",
-        "front": "vmcraft:block/front"
+        "front": "vmcraft:block/front",
+        "particle": "minecraft:block/iron_block"
     },
     "display": {
         "gui": {
@@ -24,25 +24,24 @@
             "translation": [ 0, 0, 0 ],
             "scale": [ 1, 1, 1 ]
         },
-        "head": {
-            "rotation": [ 0, 180, 0 ],
-            "translation": [ 0, 0, 0 ],
-            "scale": [ 1, 1, 1 ]
+        "thirdperson_righthand": {
+            "rotation": [ 75, 315, 0 ],
+            "translation": [ 0, 2.5, 0 ],
+            "scale": [ 0.375, 0.375, 0.375 ]
         },
         "firstperson_righthand": {
             "rotation": [ 0, 315, 0 ],
             "translation": [ 0, 2.5, 0 ],
             "scale": [ 0.4, 0.4, 0.4 ]
         },
-        "thirdperson_righthand": {
-            "rotation": [ 75, 315, 0 ],
-            "translation": [ 0, 2.5, 0 ],
-            "scale": [ 0.375, 0.375, 0.375 ]
+        "firstperson_lefthand": {
+            "rotation": [ 0, 45, 0 ],
+            "translation": [ 0, 0, 0 ],
+            "scale": [ 0.40, 0.40, 0.40 ]
         }
     },
     "elements": [
         {
-            "name": "base",
             "from": [ 1, 0, 5 ], 
             "to": [ 15, 1, 15 ],
             "faces": {
@@ -55,7 +54,6 @@
             }
         },
         {
-            "name": "screen",
             "from": [ 1, 0, 5 ], 
             "to": [ 15, 10, 6 ], 
             "rotation": { "origin": [ 8, 0, 5 ], "axis": "x", "angle": -22.5 },
