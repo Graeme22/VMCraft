@@ -1,14 +1,13 @@
 package com.github.graeme22.vmcraft.blocks;
 
-import java.io.IOException;
-
-import com.github.graeme22.vmcraft.VMCraft;
+import com.github.graeme22.vmcraft.gui.ConsoleBlockScreen;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
@@ -23,6 +22,9 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.DistExecutor;
 
 public class ConsoleBlock extends Block {
 	
@@ -40,16 +42,16 @@ public class ConsoleBlock extends Block {
     
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		// launch GUI/CLI
-		try {
-			Process process = Runtime.getRuntime().exec("virt-viewer -cf qemu:///system fedora");
-			return ActionResultType.SUCCESS;
-		} catch (IOException e) {
-			VMCraft.LOGGER.error("Failed to launch machine.");
-			e.printStackTrace();
-			return ActionResultType.FAIL;
-		}
-		
+		// client-side only
+    	DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> openGui(worldIn, pos));
+    	return ActionResultType.SUCCESS;
+    }
+    
+    @OnlyIn(Dist.CLIENT)
+    private void openGui(World worldIn, BlockPos pos) {
+    	// handle on logical client
+    	if(worldIn.isRemote)
+    		Minecraft.getInstance().displayGuiScreen(new ConsoleBlockScreen());
     }
     
     @Override
