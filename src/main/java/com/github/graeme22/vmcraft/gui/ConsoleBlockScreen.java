@@ -15,29 +15,47 @@ import net.minecraft.client.resources.I18n;
 public class ConsoleBlockScreen extends Screen {
 
 	// add radio button for local/remote
+	protected TextFieldWidget machineTxt;
 	protected TextFieldWidget usernameTxt;
    	protected TextFieldWidget passwordTxt;
    	protected TextFieldWidget hostnameTxt;
    	protected TextFieldWidget portTxt;
-   	protected ToggleWidget sshBtn;
+   	protected CheckboxButton sshBtn;
    	
    	public ConsoleBlockScreen() {
 		super(NarratorChatListener.EMPTY);
 	}
 
    	protected void init() {
-   		this.addButton(new CheckboxButton(this.width / 2 - 40, this.height / 2 - 50, 80, 20, I18n.format("gui." + VMCraft.MOD_ID + ".toggle"), false));
+   		// local/remote toggle
+   		this.sshBtn = this.addButton(new CheckboxButton(this.width / 2 - 80 - 5, this.height / 2 - 80, 80, 20, I18n.format("gui." + VMCraft.MOD_ID + ".toggle"), false));
+   		// VM name field
+   		this.machineTxt = this.addButton(new TextFieldWidget(font, this.width / 2 + 5, this.height / 2 - 80, 80, 20, "VM"));
+   		this.machineTxt.setText("VM");
+   		// host name field
+   		this.hostnameTxt = this.addButton(new TextFieldWidget(font, this.width / 2 - 80 - 5, this.height / 2 - 50, 80, 20, "hostname"));
+   		this.hostnameTxt.setText("hostname");
+   		// port field
+   		this.portTxt = this.addButton(new TextFieldWidget(font, this.width / 2 + 5, this.height / 2 - 50, 80, 20, "port"));
+   		this.portTxt.setText("port");
+   		// user name field
+   		this.usernameTxt = this.addButton(new TextFieldWidget(font, this.width / 2 - 80 - 5, this.height / 2 - 20, 80, 20, "username"));
+   		this.usernameTxt.setText("username");
+   		// password field
+   		this.passwordTxt = this.addButton(new TextFieldWidget(font, this.width / 2 + 5, this.height / 2 - 20, 80, 20, "password"));
+   		this.passwordTxt.setText("password");
    		// connect button
-   		this.addButton(new Button(this.width / 2 - 40, this.height / 2 - 25, 80, 20, I18n.format("gui." + VMCraft.MOD_ID + ".connect"), $ -> this.connect()));
+   		this.addButton(new Button(this.width / 2 - 80 - 5, this.height / 2 + 10, 80, 20, I18n.format("gui." + VMCraft.MOD_ID + ".connect"), $ -> this.connect()));
    		// quit button
-   		this.addButton(new Button(this.width / 2 - 40, this.height / 2, 80, 20, I18n.format("gui.done"), $ -> this.minecraft.displayGuiScreen(null)));
+   		this.addButton(new Button(this.width / 2 + 5, this.height / 2 + 10, 80, 20, I18n.format("gui.done"), $ -> this.minecraft.displayGuiScreen(null)));
    		super.init();
    	}
 	   
    	private void connect() {
    		// launch GUI/CLI
    		try {
-   			Runtime.getRuntime().exec("virt-viewer -cf qemu:///system varch");
+   			String command = String.format("virt-viewer -cf qemu%s:///system %s", (sshBtn.isChecked() ? "+ssh" : ""), this.machineTxt.getText());
+   			Runtime.getRuntime().exec(command);
    		} catch (IOException e) {
    			VMCraft.LOGGER.error("Failed to launch machine.");
 			e.printStackTrace();
