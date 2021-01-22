@@ -30,13 +30,13 @@ public class ConsoleBlockScreen extends Screen {
    		// local/remote toggle
    		this.sshBtn = this.addButton(new CheckboxButton(this.width / 2 - 80 - 5, this.height / 2 - 80, 80, 20, I18n.format("gui." + VMCraft.MOD_ID + ".toggle"), false));
    		// VM name field
-   		this.machineTxt = this.addButton(new TextFieldWidget(font, this.width / 2 + 5, this.height / 2 - 80, 80, 20, "VM"));
-   		this.machineTxt.setText("VM");
+   		this.machineTxt = this.addButton(new TextFieldWidget(font, this.width / 2 + 5, this.height / 2 - 80, 80, 20, "virtual machine"));
+   		this.machineTxt.setText("virtual machine");
    		// host name field
-   		this.hostnameTxt = this.addButton(new TextFieldWidget(font, this.width / 2 - 80 - 5, this.height / 2 - 50, 80, 20, "hostname"));
+   		this.hostnameTxt = this.addButton(new TextFieldWidget(font, this.width / 2 - 80 - 5, this.height / 2 - 50, 120, 20, "hostname"));
    		this.hostnameTxt.setText("hostname");
    		// port field
-   		this.portTxt = this.addButton(new TextFieldWidget(font, this.width / 2 + 5, this.height / 2 - 50, 80, 20, "port"));
+   		this.portTxt = this.addButton(new TextFieldWidget(font, this.width / 2 + 5 + 40, this.height / 2 - 50, 40, 20, "port"));
    		this.portTxt.setText("port");
    		// user name field
    		this.usernameTxt = this.addButton(new TextFieldWidget(font, this.width / 2 - 80 - 5, this.height / 2 - 20, 80, 20, "username"));
