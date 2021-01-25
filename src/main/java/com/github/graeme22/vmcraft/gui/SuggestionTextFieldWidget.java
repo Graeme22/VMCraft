@@ -41,6 +41,8 @@ public class SuggestionTextFieldWidget extends Widget implements IRenderable, IG
 	/** If this value is true along with isFocused, keyTyped will process the keys. */
 	private boolean isEnabled = true;
 	private boolean field_212956_h;
+	// Whether or not to hide the characters entered
+	private boolean isPassword = false;
 	/** The current character index that should be used as start of the rendered text. */
 	private int lineScrollOffset;
 	private int cursorPosition;
@@ -66,6 +68,10 @@ public class SuggestionTextFieldWidget extends Widget implements IRenderable, IG
 		if (p_i51138_6_ != null) {
 			this.setText(p_i51138_6_.getText());
 		}
+	}
+	
+	public void setPassword() {
+		this.isPassword = true;
 	}
 
 	public void setResponder(Consumer<String> rssponderIn) {
@@ -436,6 +442,8 @@ public class SuggestionTextFieldWidget extends Widget implements IRenderable, IG
 			int j = this.cursorPosition - this.lineScrollOffset;
 			int k = this.selectionEnd - this.lineScrollOffset;
 			String s = this.fontRenderer.trimStringToWidth(this.text.substring(this.lineScrollOffset), this.getAdjustedWidth());
+			if(this.isPassword)
+				s = "*".repeat(s.length());
 			boolean flag = j >= 0 && j <= s.length();
 			boolean flag1 = this.isFocused() && this.cursorCounter / 6 % 2 == 0 && flag;
 			int l = this.enableBackgroundDrawing ? this.x + 4 : this.x;

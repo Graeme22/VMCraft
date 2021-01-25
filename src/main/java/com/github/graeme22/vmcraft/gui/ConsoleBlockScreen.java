@@ -38,6 +38,7 @@ public class ConsoleBlockScreen extends Screen {
    		// password field
    		this.passwordTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 + 5, this.height / 2 - 20, 80, 20, "password"));
    		this.passwordTxt.setSuggestion("password");
+   		this.passwordTxt.setPassword();
    		// connect button
    		this.addButton(new Button(this.width / 2 - 80 - 5, this.height / 2 + 10, 80, 20, I18n.format("gui." + VMCraft.MOD_ID + ".connect"), $ -> this.connect()));
    		// quit button
