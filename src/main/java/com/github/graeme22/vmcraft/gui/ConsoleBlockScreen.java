@@ -32,6 +32,7 @@ public class ConsoleBlockScreen extends Screen {
    		// port field
    		this.portTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 + 5 + 40, this.height / 2 - 50, 40, 20, "port"));
    		this.portTxt.setSuggestion("port");
+   		this.portTxt.setNumeric();
    		// user name field
    		this.usernameTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 - 80 - 5, this.height / 2 - 20, 80, 20, "user"));
    		this.usernameTxt.setSuggestion("username");

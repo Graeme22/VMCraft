@@ -43,6 +43,8 @@ public class SuggestionTextFieldWidget extends Widget implements IRenderable, IG
 	private boolean field_212956_h;
 	// Whether or not to hide the characters entered
 	private boolean isPassword = false;
+	// Whether the text is only numeric characters
+	private boolean isNumeric = false;
 	/** The current character index that should be used as start of the rendered text. */
 	private int lineScrollOffset;
 	private int cursorPosition;
@@ -72,6 +74,10 @@ public class SuggestionTextFieldWidget extends Widget implements IRenderable, IG
 	
 	public void setPassword() {
 		this.isPassword = true;
+	}
+	
+	public void setNumeric() {
+		this.isNumeric = true;
 	}
 
 	public void setResponder(Consumer<String> rssponderIn) {
@@ -137,6 +143,8 @@ public class SuggestionTextFieldWidget extends Widget implements IRenderable, IG
 	public void writeText(String textToWrite) {
 		String s = "";
 		String s1 = SharedConstants.filterAllowedCharacters(textToWrite);
+		if(this.isNumeric)
+			s1 = s1.replaceAll("[^0-9]", "");
 		int i = this.cursorPosition < this.selectionEnd ? this.cursorPosition : this.selectionEnd;
 		int j = this.cursorPosition < this.selectionEnd ? this.selectionEnd : this.cursorPosition;
 		int k = this.maxStringLength - this.text.length() - (i - j);
