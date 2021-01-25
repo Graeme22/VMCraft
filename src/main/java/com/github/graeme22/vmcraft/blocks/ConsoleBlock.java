@@ -23,7 +23,6 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 
 public class ConsoleBlock extends Block {
@@ -36,8 +35,7 @@ public class ConsoleBlock extends Block {
 	protected static final VoxelShape SHAPE_E = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 11.0D, 1.0D, 15.0D);
 
     public ConsoleBlock() {
-        super(Block.Properties.create(Material.IRON)
-        		   			  .sound(SoundType.METAL));
+        super(Block.Properties.create(Material.IRON).sound(SoundType.METAL));
     }
     
     @Override
@@ -47,7 +45,6 @@ public class ConsoleBlock extends Block {
     	return ActionResultType.SUCCESS;
     }
     
-    @OnlyIn(Dist.CLIENT)
     private void openGui(World worldIn, BlockPos pos) {
     	// handle on logical client
     	if(worldIn.isRemote)

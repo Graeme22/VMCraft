@@ -6,8 +6,6 @@ import com.github.graeme22.vmcraft.VMCraft;
 
 import net.minecraft.client.gui.chat.NarratorChatListener;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.gui.widget.ToggleWidget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.button.CheckboxButton;
 import net.minecraft.client.resources.I18n;
@@ -15,11 +13,7 @@ import net.minecraft.client.resources.I18n;
 public class ConsoleBlockScreen extends Screen {
 
 	// add radio button for local/remote
-	protected TextFieldWidget machineTxt;
-	protected TextFieldWidget usernameTxt;
-   	protected TextFieldWidget passwordTxt;
-   	protected TextFieldWidget hostnameTxt;
-   	protected TextFieldWidget portTxt;
+	protected SuggestionTextFieldWidget machineTxt, usernameTxt, passwordTxt, hostnameTxt, portTxt;
    	protected CheckboxButton sshBtn;
    	
    	public ConsoleBlockScreen() {
@@ -30,20 +24,20 @@ public class ConsoleBlockScreen extends Screen {
    		// local/remote toggle
    		this.sshBtn = this.addButton(new CheckboxButton(this.width / 2 - 80 - 5, this.height / 2 - 80, 80, 20, I18n.format("gui." + VMCraft.MOD_ID + ".toggle"), false));
    		// VM name field
-   		this.machineTxt = this.addButton(new TextFieldWidget(font, this.width / 2 + 5, this.height / 2 - 80, 80, 20, "virtual machine"));
-   		this.machineTxt.setText("virtual machine");
+   		this.machineTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 + 5, this.height / 2 - 80, 80, 20, "machine"));
+   		this.machineTxt.setSuggestion("VM name");
    		// host name field
-   		this.hostnameTxt = this.addButton(new TextFieldWidget(font, this.width / 2 - 80 - 5, this.height / 2 - 50, 120, 20, "hostname"));
-   		this.hostnameTxt.setText("hostname");
+   		this.hostnameTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 - 80 - 5, this.height / 2 - 50, 120, 20, "host"));
+   		this.hostnameTxt.setSuggestion("hostname");
    		// port field
-   		this.portTxt = this.addButton(new TextFieldWidget(font, this.width / 2 + 5 + 40, this.height / 2 - 50, 40, 20, "port"));
-   		this.portTxt.setText("port");
+   		this.portTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 + 5 + 40, this.height / 2 - 50, 40, 20, "port"));
+   		this.portTxt.setSuggestion("port");
    		// user name field
-   		this.usernameTxt = this.addButton(new TextFieldWidget(font, this.width / 2 - 80 - 5, this.height / 2 - 20, 80, 20, "username"));
-   		this.usernameTxt.setText("username");
+   		this.usernameTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 - 80 - 5, this.height / 2 - 20, 80, 20, "user"));
+   		this.usernameTxt.setSuggestion("username");
    		// password field
-   		this.passwordTxt = this.addButton(new TextFieldWidget(font, this.width / 2 + 5, this.height / 2 - 20, 80, 20, "password"));
-   		this.passwordTxt.setText("password");
+   		this.passwordTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 + 5, this.height / 2 - 20, 80, 20, "password"));
+   		this.passwordTxt.setSuggestion("password");
    		// connect button
    		this.addButton(new Button(this.width / 2 - 80 - 5, this.height / 2 + 10, 80, 20, I18n.format("gui." + VMCraft.MOD_ID + ".connect"), $ -> this.connect()));
    		// quit button
