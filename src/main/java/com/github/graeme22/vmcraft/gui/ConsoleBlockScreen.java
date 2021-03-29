@@ -1,6 +1,8 @@
 package com.github.graeme22.vmcraft.gui;
 
 import java.io.IOException;
+import java.io.File;
+import java.io.FileWriter;
 
 import com.github.graeme22.vmcraft.VMCraft;
 
@@ -26,6 +28,7 @@ public class ConsoleBlockScreen extends Screen {
    		// VM name field
    		this.machineTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 + 5, this.height / 2 - 80, 80, 20, "machine"));
    		this.machineTxt.setSuggestion("VM name");
+   		
    		// host name field
    		this.hostnameTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 - 80 - 5, this.height / 2 - 50, 120, 20, "host"));
    		this.hostnameTxt.setSuggestion("hostname");
@@ -50,10 +53,25 @@ public class ConsoleBlockScreen extends Screen {
    	private void connect() {
    		// launch GUI/CLI
    		try {
-   			String command = String.format("virt-viewer -cf qemu%s:///system %s", (sshBtn.isChecked() ? "+ssh" : ""), this.machineTxt.getText());
+   			File f = File.createTempFile("tmp", "vv");
+   			f.deleteOnExit();
+   			FileWriter out = new FileWriter(f.getAbsolutePath());
+   			
+   			// write connection info to file
+   			out.write("[virt-viewer]\n");
+   			out.write("type=vnc\n");
+   			out.write(String.format("host=%s\n", this.hostnameTxt.getText()));
+   			out.write(String.format("port=%s\n", this.portTxt.getText()));
+   			out.write(String.format("password=%s\n", this.passwordTxt.getText()));
+   			//out.write(String.format("", null));
+   			out.write("title=VMCraft Client\n");
+   			out.write("fullscreen=0\n");
+   			out.close();
+   			
+   			String command = String.format("remote-viewer %s", f.getAbsolutePath());
    			Runtime.getRuntime().exec(command);
    		} catch (IOException e) {
-   			VMCraft.LOGGER.error("Failed to launch machine.");
+   			VMCraft.LOGGER.error("Failed to connect to virtual machine.");
 			e.printStackTrace();
 		}
    	}

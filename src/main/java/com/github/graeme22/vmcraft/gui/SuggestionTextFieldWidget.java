@@ -1,6 +1,7 @@
 package com.github.graeme22.vmcraft.gui;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -451,7 +452,8 @@ public class SuggestionTextFieldWidget extends Widget implements IRenderable, IG
 			int k = this.selectionEnd - this.lineScrollOffset;
 			String s = this.fontRenderer.trimStringToWidth(this.text.substring(this.lineScrollOffset), this.getAdjustedWidth());
 			if(this.isPassword)
-				s = "*".repeat(s.length());
+				String.join("", Collections.nCopies(s.length(), "*"));
+			//s = "*".repeat(s.length());
 			boolean flag = j >= 0 && j <= s.length();
 			boolean flag1 = this.isFocused() && this.cursorCounter / 6 % 2 == 0 && flag;
 			int l = this.enableBackgroundDrawing ? this.x + 4 : this.x;
