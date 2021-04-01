@@ -1,6 +1,5 @@
 package com.github.graeme22.vmcraft.gui;
 
-import java.io.IOException;
 import java.io.File;
 import java.io.FileWriter;
 
@@ -17,18 +16,15 @@ public class ConsoleBlockScreen extends Screen {
 	// add radio button for local/remote
 	protected SuggestionTextFieldWidget machineTxt, usernameTxt, passwordTxt, hostnameTxt, portTxt;
    	protected CheckboxButton sshBtn;
+   	protected Button typeButton;
+   	
+   	private boolean isSpice = false;
    	
    	public ConsoleBlockScreen() {
 		super(NarratorChatListener.EMPTY);
 	}
 
    	protected void init() {
-   		// local/remote toggle
-   		this.sshBtn = this.addButton(new CheckboxButton(this.width / 2 - 80 - 5, this.height / 2 - 80, 80, 20, I18n.format("gui." + VMCraft.MOD_ID + ".toggle"), false));
-   		// VM name field
-   		this.machineTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 + 5, this.height / 2 - 80, 80, 20, "machine"));
-   		this.machineTxt.setSuggestion("VM name");
-   		
    		// host name field
    		this.hostnameTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 - 80 - 5, this.height / 2 - 50, 120, 20, "host"));
    		this.hostnameTxt.setSuggestion("hostname");
@@ -43,34 +39,47 @@ public class ConsoleBlockScreen extends Screen {
    		this.passwordTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 + 5, this.height / 2 - 20, 80, 20, "password"));
    		this.passwordTxt.setSuggestion("password");
    		this.passwordTxt.setPassword();
+   		// protocol button
+   		this.typeButton = this.addButton(new Button(this.width / 2 - 80 - 5, this.height / 2 + 8, 52, 20, "VNC", $ -> this.toggle()));
    		// connect button
-   		this.addButton(new Button(this.width / 2 - 80 - 5, this.height / 2 + 10, 80, 20, I18n.format("gui." + VMCraft.MOD_ID + ".connect"), $ -> this.connect()));
+   		this.addButton(new Button(this.width / 2 - 27, this.height / 2 + 8, 52, 20, I18n.format("gui." + VMCraft.MOD_ID + ".connect"), $ -> this.connect()));
    		// quit button
-   		this.addButton(new Button(this.width / 2 + 5, this.height / 2 + 10, 80, 20, I18n.format("gui.done"), $ -> this.minecraft.displayGuiScreen(null)));
+   		this.addButton(new Button(this.width / 2 + 26 + 5, this.height / 2 + 8, 52, 20, I18n.format("gui." + VMCraft.MOD_ID + ".done"), $ -> this.minecraft.displayGuiScreen(null)));
    		super.init();
+   	}
+   	
+   	private void toggle() {
+   		this.isSpice = !this.isSpice;
+   		if(this.isSpice)
+   			this.typeButton.setMessage("SPICE");
+   		else
+   			this.typeButton.setMessage("VNC");
    	}
 	   
    	private void connect() {
    		// launch GUI/CLI
    		try {
    			File f = File.createTempFile("tmp", "vv");
-   			f.deleteOnExit();
    			FileWriter out = new FileWriter(f.getAbsolutePath());
    			
    			// write connection info to file
    			out.write("[virt-viewer]\n");
-   			out.write("type=vnc\n");
-   			out.write(String.format("host=%s\n", this.hostnameTxt.getText()));
-   			out.write(String.format("port=%s\n", this.portTxt.getText()));
-   			out.write(String.format("password=%s\n", this.passwordTxt.getText()));
-   			//out.write(String.format("", null));
-   			out.write("title=VMCraft Client\n");
-   			out.write("fullscreen=0\n");
+   			out.write(String.format("type=%s\n", (this.isSpice ? "spice" : "vnc")));
+   			if(this.hostnameTxt.getText() != "")
+   				out.write(String.format("host=%s\n", this.hostnameTxt.getText()));
+   			if(this.portTxt.getText() != "")
+   				out.write(String.format("port=%s\n", this.portTxt.getText()));
+   			if(this.usernameTxt.getText() != "")
+   				out.write(String.format("username=%s\n", this.usernameTxt.getText()));
+   			if(this.passwordTxt.getText() != "")
+   				out.write(String.format("password=%s\n", this.passwordTxt.getText()));
+   			out.write("fullscreen=1\n");
+   			out.write("delete-this-file=1\n");
    			out.close();
    			
    			String command = String.format("remote-viewer %s", f.getAbsolutePath());
    			Runtime.getRuntime().exec(command);
-   		} catch (IOException e) {
+   		} catch (Exception e) {
    			VMCraft.LOGGER.error("Failed to connect to virtual machine.");
 			e.printStackTrace();
 		}

@@ -452,8 +452,8 @@ public class SuggestionTextFieldWidget extends Widget implements IRenderable, IG
 			int k = this.selectionEnd - this.lineScrollOffset;
 			String s = this.fontRenderer.trimStringToWidth(this.text.substring(this.lineScrollOffset), this.getAdjustedWidth());
 			if(this.isPassword)
-				String.join("", Collections.nCopies(s.length(), "*"));
-			//s = "*".repeat(s.length());
+				s = String.join("", Collections.nCopies(s.length(), "*"));
+
 			boolean flag = j >= 0 && j <= s.length();
 			boolean flag1 = this.isFocused() && this.cursorCounter / 6 % 2 == 0 && flag;
 			int l = this.enableBackgroundDrawing ? this.x + 4 : this.x;
