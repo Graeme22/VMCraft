@@ -13,11 +13,12 @@ import net.minecraft.client.resources.I18n;
 
 public class ConsoleBlockScreen extends Screen {
 
-	// add radio button for local/remote
 	protected SuggestionTextFieldWidget machineTxt, usernameTxt, passwordTxt, hostnameTxt, portTxt;
    	protected CheckboxButton sshBtn;
    	protected Button typeButton;
    	
+   	// whether or not we're using the SPICE protocol.
+   	// if we aren't, we're using VNC.
    	private boolean isSpice = false;
    	
    	public ConsoleBlockScreen() {
@@ -26,19 +27,17 @@ public class ConsoleBlockScreen extends Screen {
 
    	protected void init() {
    		// host name field
-   		this.hostnameTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 - 80 - 5, this.height / 2 - 50, 120, 20, "host"));
-   		this.hostnameTxt.setSuggestion("hostname");
+   		this.hostnameTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 - 80 - 5, this.height / 2 - 50, 120, 20, "hostname"));
+   		this.hostnameTxt.setSuggestion(I18n.format("gui." + VMCraft.MOD_ID + ".host"));
    		// port field
-   		this.portTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 + 5 + 40, this.height / 2 - 50, 40, 20, "port"));
-   		this.portTxt.setSuggestion("port");
-   		this.portTxt.setNumeric();
+   		this.portTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 + 5 + 40, this.height / 2 - 50, 40, 20, "port").setNumeric());
+   		this.portTxt.setSuggestion(I18n.format("gui." + VMCraft.MOD_ID + ".port"));
    		// user name field
-   		this.usernameTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 - 80 - 5, this.height / 2 - 20, 80, 20, "user"));
-   		this.usernameTxt.setSuggestion("username");
+   		this.usernameTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 - 80 - 5, this.height / 2 - 20, 80, 20, "username"));
+   		this.usernameTxt.setSuggestion(I18n.format("gui." + VMCraft.MOD_ID + ".user"));
    		// password field
-   		this.passwordTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 + 5, this.height / 2 - 20, 80, 20, "password"));
-   		this.passwordTxt.setSuggestion("password");
-   		this.passwordTxt.setPassword();
+   		this.passwordTxt = this.addButton(new SuggestionTextFieldWidget(font, this.width / 2 + 5, this.height / 2 - 20, 80, 20, "password").setPassword());
+   		this.passwordTxt.setSuggestion(I18n.format("gui." + VMCraft.MOD_ID + ".password"));
    		// protocol button
    		this.typeButton = this.addButton(new Button(this.width / 2 - 80 - 5, this.height / 2 + 8, 52, 20, "VNC", $ -> this.toggle()));
    		// connect button
@@ -48,6 +47,9 @@ public class ConsoleBlockScreen extends Screen {
    		super.init();
    	}
    	
+   	/**
+   	 * toggles between VNC and SPICE.
+   	 */
    	private void toggle() {
    		this.isSpice = !this.isSpice;
    		if(this.isSpice)
@@ -62,9 +64,10 @@ public class ConsoleBlockScreen extends Screen {
    			File f = File.createTempFile("tmp", "vv");
    			FileWriter out = new FileWriter(f.getAbsolutePath());
    			
-   			// write connection info to file
+   			// write connection info to .vv file
    			out.write("[virt-viewer]\n");
    			out.write(String.format("type=%s\n", (this.isSpice ? "spice" : "vnc")));
+   			// only write these portions if they contain something
    			if(this.hostnameTxt.getText() != "")
    				out.write(String.format("host=%s\n", this.hostnameTxt.getText()));
    			if(this.portTxt.getText() != "")
@@ -79,7 +82,9 @@ public class ConsoleBlockScreen extends Screen {
    			
    			String command = String.format("remote-viewer %s", f.getAbsolutePath());
    			Runtime.getRuntime().exec(command);
-   		} catch (Exception e) {
+   		}
+   		// fail gracefully
+   		catch (Exception e) {
    			VMCraft.LOGGER.error("Failed to connect to virtual machine.");
 			e.printStackTrace();
 		}
@@ -91,6 +96,9 @@ public class ConsoleBlockScreen extends Screen {
    		super.render(mouseX, mouseY, partialTicks);
    	}
    
+   	/**
+   	 * opening the menu will pause the game in single-player games
+   	 */
    	@Override
    	public boolean isPauseScreen() {
    		return true;

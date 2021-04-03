@@ -29,6 +29,16 @@ import net.minecraft.util.SharedConstants;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
 
+/**
+ * Similar to TextFieldWidget, but provides additional functionality:
+ * Password-designated fields display asterisks instead of sensitive content;
+ * Number-designated fields won't accept non-numerical input;
+ * A greyed-out "suggestion" text shows users what is expected in the text
+ * box, and disappears once they focus on that box.
+ * 
+ * Most of the functions in here are copied from TextFieldWidget (I couldn't
+ * inherit from it for some reason, can't remember why.)
+ */
 public class SuggestionTextFieldWidget extends Widget implements IRenderable, IGuiEventListener {
 	
 	private final FontRenderer fontRenderer;
@@ -53,6 +63,7 @@ public class SuggestionTextFieldWidget extends Widget implements IRenderable, IG
 	private int selectionEnd;
 	private int enabledColor = 14737632;
 	private int disabledColor = 7368816;
+	// the text to show the user what is expected in the field.
 	private String suggestion;
 	private Consumer<String> guiResponder;
 	/** Called to check if the text is valid */
@@ -73,12 +84,17 @@ public class SuggestionTextFieldWidget extends Widget implements IRenderable, IG
 		}
 	}
 	
-	public void setPassword() {
+	public SuggestionTextFieldWidget setPassword() {
 		this.isPassword = true;
+		return this;
 	}
 	
-	public void setNumeric() {
+	/**
+	 * prevent the user from entering non-numeric characters.
+	 */
+	public SuggestionTextFieldWidget setNumeric() {
 		this.isNumeric = true;
+		return this;
 	}
 
 	public void setResponder(Consumer<String> rssponderIn) {
@@ -144,6 +160,7 @@ public class SuggestionTextFieldWidget extends Widget implements IRenderable, IG
 	public void writeText(String textToWrite) {
 		String s = "";
 		String s1 = SharedConstants.filterAllowedCharacters(textToWrite);
+		// remove non-numeric characters
 		if(this.isNumeric)
 			s1 = s1.replaceAll("[^0-9]", "");
 		int i = this.cursorPosition < this.selectionEnd ? this.cursorPosition : this.selectionEnd;
@@ -451,6 +468,7 @@ public class SuggestionTextFieldWidget extends Widget implements IRenderable, IG
 			int j = this.cursorPosition - this.lineScrollOffset;
 			int k = this.selectionEnd - this.lineScrollOffset;
 			String s = this.fontRenderer.trimStringToWidth(this.text.substring(this.lineScrollOffset), this.getAdjustedWidth());
+			// if it's a password field, render asterisks instead.
 			if(this.isPassword)
 				s = String.join("", Collections.nCopies(s.length(), "*"));
 
@@ -688,6 +706,10 @@ public class SuggestionTextFieldWidget extends Widget implements IRenderable, IG
 		this.x = xIn;
 	}
 	
+	/**
+	 * fixes a bug in the default widget configuration
+	 * that allows the user to focus multiple fields at once.
+	 */
 	@Override
 	protected void setFocused(boolean set) {
 		if(!set) {

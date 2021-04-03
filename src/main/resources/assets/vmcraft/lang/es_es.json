@@ -1,0 +1,10 @@
+{
+	"block.vmcraft.console_block": "Portátil",
+	"itemGroup.vmcraft": "VMCraft",
+	"gui.vmcraft.connect": "Iniciar",
+	"gui.vmcraft.done": "Salir",
+	"gui.vmcraft.host": "servidor",
+	"gui.vmcraft.port": "puerto",
+	"gui.vmcraft.user": "usuario",
+	"gui.vmcraft.password": "contraseña"
+}

@@ -2,6 +2,9 @@
 	"block.vmcraft.console_block": "Laptop",
 	"itemGroup.vmcraft": "VMCraft",
 	"gui.vmcraft.connect": "Connect",
-	"gui.vmcraft.done": "Quit",
-	"gui.vmcraft.info": "Protocol"
+	"gui.vmcraft.done": "Done",
+	"gui.vmcraft.host": "host",
+	"gui.vmcraft.port": "port",
+	"gui.vmcraft.user": "user",
+	"gui.vmcraft.password": "password"
 }

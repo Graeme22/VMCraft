@@ -29,6 +29,7 @@ public class ConsoleBlock extends Block {
 	
 	private static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 	
+	// bounding boxes based on which direction the block is facing.
 	protected static final VoxelShape SHAPE_N = Block.makeCuboidShape(1.0D, 0.0D, 5.0D, 15.0D, 1.0D, 15.0D);
 	protected static final VoxelShape SHAPE_S = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 1.0D, 11.0D);
 	protected static final VoxelShape SHAPE_W = Block.makeCuboidShape(5.0D, 0.0D, 1.0D, 15.0D, 1.0D, 15.0D);
@@ -38,9 +39,12 @@ public class ConsoleBlock extends Block {
         super(Block.Properties.create(Material.IRON).sound(SoundType.METAL));
     }
     
+    /**
+     * handles right-click event by spawning new GUI
+     */
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		// client-side only
+		// client-side only: open the GUI
     	DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> openGui(worldIn, pos));
     	return ActionResultType.SUCCESS;
     }
@@ -66,6 +70,10 @@ public class ConsoleBlock extends Block {
     		return SHAPE_N;
     	}
     }
+    
+    /*
+     * basic functions to enable the directional functionality
+     */
     
     @Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
