@@ -1,7 +1,15 @@
 # VMCraft
 Enterprise virtualization enabling mod for Minecraft
 
-## Setup
+## Intallation
+1. Install [virt-viewer](http://virt-manager.org/download/)
+2. Add the `bin` folder of your virt-viewer install to your PATH environment variable.
+3. Place the jarfile in your Minecraft Forge `mods` folder.
+
+## Usage
+TODO
+
+## Setup (Developers)
 1. Install JDK 8, e.g. `sudo apt-get install openjdk-8-jdk`
 2. Install Eclipse from http://eclipse.org
 3. Clone the repository: `git clone https://github.com/Graeme22/VMCraft.git`
